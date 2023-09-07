@@ -7,13 +7,6 @@ body{
     font-family: 'Inter', sans-serif;
     background-color: #3B4664;
 }
-.output{
-    background-color: #181F32;
-    color: white;
-    padding: 1.5rem;
-    border-radius: 6px;
-    text-align: end;
-}
 /* .calculator-container{
     display: grid;
     justify-content: center;
@@ -26,6 +19,16 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    gap: 1rem;
+}
+.output{
+    background-color: #181F32;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 6px;
+    text-align: end;
+    min-width: 38%;
+    box-shadow: 0 4px 4px rgb(0 0 0 / 0.25);
 }
 .btn-container{
     display: grid;
