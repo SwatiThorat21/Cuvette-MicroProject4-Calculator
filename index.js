@@ -47,3 +47,18 @@ function inputDigit(digit) {
   }
 }
 
+function handleOperator(nextOperator) {
+  const inputValue = parseFloat(calculator.displayValue);
+  if (calculator.operator && calculator.waitingForSecondOperator) {
+    calculator.operator = nextOperator;
+  }
+  if (calculator.firstOprand === null) {
+    calculator.firstOprand = inputValue;
+  } else {
+    const result = performCalculation();
+    calculator.displayValue = result;
+    calculator.firstOprand = result;
+  }
+  calculator.operator = nextOperator;
+  calculator.waitingForSecondOperator = true;
+}
