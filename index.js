@@ -4,13 +4,13 @@ let btnContainer = document.getElementById("btn-container");
 
 let calculator = {
   displayValue: 0,
-  firstOprand: null,
+  firstOperand: null,
   operator: undefined,
-  waitingForSecondOperator: false,
+  waitingForSecondOperand: false,
 };
 
 function updateDisplay() {
-  output.innerHTML = calculator.displayValue;
+  output.textContent = calculator.displayValue;
 }
 updateDisplay();
 
@@ -38,27 +38,51 @@ btnArray.forEach((btn) => {
 });
 
 function inputDigit(digit) {
-  if (calculator.waitingForSecondOperator) {
+  if (calculator.waitingForSecondOperand) {
     calculator.displayValue = digit;
-    calculator.waitingForSecondOperator = false;
+    calculator.waitingForSecondOperand = false;
   } else {
     calculator.displayValue =
-      calculator.displayValue === 0 ? digit : calculator.displayValue + digit;
+    calculator.displayValue === 0 ? digit : calculator.displayValue + digit;
   }
 }
 
 function handleOperator(nextOperator) {
-  const inputValue = parseFloat(calculator.displayValue);
-  if (calculator.operator && calculator.waitingForSecondOperator) {
-    calculator.operator = nextOperator;
-  }
-  if (calculator.firstOprand === null) {
-    calculator.firstOprand = inputValue;
-  } else {
-    const result = performCalculation();
+  let inputValue = parseFloat(calculator.displayValue);
+  calculator.operator = nextOperator;
+
+  if (calculator.firstOperand === null) {
+    calculator.firstOperand = inputValue;
+  } else if (calculator.operator) {
+    let result = performCalculation();
     calculator.displayValue = result;
-    calculator.firstOprand = result;
+    calculator.firstOperand = result;
   }
   calculator.operator = nextOperator;
-  calculator.waitingForSecondOperator = true;
+  calculator.waitingForSecondOperand = true;
+}
+
+function performCalculation() {
+  let { firstOperand, operator, displayValue } = calculator;
+  let inputValue = parseFloat(displayValue);
+
+  if (operator === "+") {
+    return firstOperand + inputValue;
+  } else if (operator === "-") {
+    return firstOperand - inputValue;
+  } else if (operator === "x") {
+    return firstOperand * inputValue;
+  } else {
+    return firstOperand / inputValue;
+  }
+}
+
+function calculate() {
+  if (calculator.operator && !calculator.waitingForSecondOperand) {
+    let result = performCalculation();
+    calculator.displayValue = String(result);
+    calculator.firstOperand = result;
+    calculator.operator = null;
+    calculator.waitingForSecondOperand = true;
+  }
 }
