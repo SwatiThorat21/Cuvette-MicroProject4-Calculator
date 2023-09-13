@@ -70,6 +70,9 @@ body {
 .danger:hover {
   background-color: #b03e32 !important;
 }
+.keyPressed{
+  background-color: #d13f30 !important;
+}
 
 @media screen and (max-width: 1020px) {
   .output {

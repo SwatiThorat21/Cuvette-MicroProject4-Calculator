@@ -1,6 +1,10 @@
 let output = document.getElementById("output");
 let buttons = document.getElementsByClassName("btn");
 let btnContainer = document.getElementById("btn-container");
+let plusBtn = document.getElementById("plusBtn");
+let minusBtn = document.getElementById("minusBtn");
+let divideBtn = document.getElementById("divideBtn");
+let multiplyBtn = document.getElementById("multiplyBtn");
 
 let calculator = {
   displayValue: 0,
@@ -18,32 +22,41 @@ let btnArray = Array.from(buttons);
 btnArray.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let buttonValue = e.target.textContent;
-    if (
-      buttonValue === "+" ||
-      buttonValue === "-" ||
-      buttonValue === "÷" ||
-      buttonValue === "x"
-    ) {
+    if (buttonValue === "+") {
       handleOperator(buttonValue);
+      plusBtn.classList.add("keyPressed");
+    } else if (buttonValue === "-") {
+      handleOperator(buttonValue);
+      minusBtn.classList.add("keyPressed");
+    } else if (buttonValue === "÷") {
+      handleOperator(buttonValue);
+      divideBtn.classList.add("keyPressed");
+    } else if (buttonValue === "x") {
+      handleOperator(buttonValue);
+      multiplyBtn.classList.add("keyPressed");
     } else if (buttonValue === "=") {
+      plusBtn.classList.remove("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
       calculate();
     } else if (buttonValue === "RESET") {
       clearCalculator();
     } else {
       inputDigit(buttonValue);
     }
-
     updateDisplay();
   });
 });
 
 function inputDigit(digit) {
+  if (String(calculator.displayValue).includes(".")) return;
   if (calculator.waitingForSecondOperand) {
     calculator.displayValue = digit;
     calculator.waitingForSecondOperand = false;
   } else {
     calculator.displayValue =
-    calculator.displayValue === 0 ? digit : calculator.displayValue + digit;
+      calculator.displayValue === 0 ? digit : calculator.displayValue + digit;
   }
 }
 
@@ -59,13 +72,13 @@ function handleOperator(nextOperator) {
     calculator.firstOperand = result;
   }
   calculator.operator = nextOperator;
+  // calculator.displayValue = calculator.firstOperand + calculator.operator;
   calculator.waitingForSecondOperand = true;
 }
 
 function performCalculation() {
   let { firstOperand, operator, displayValue } = calculator;
   let inputValue = parseFloat(displayValue);
-
   if (operator === "+") {
     return firstOperand + inputValue;
   } else if (operator === "-") {
@@ -85,4 +98,11 @@ function calculate() {
     calculator.operator = null;
     calculator.waitingForSecondOperand = true;
   }
+}
+
+function clearCalculator(){
+  calculator.displayValue = '0';
+  calculator.firstOperand = null;
+  calculator.operator = null;
+  calculator.waitingForSecondOperand = false;
 }
