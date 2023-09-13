@@ -41,7 +41,17 @@ btnArray.forEach((btn) => {
       multiplyBtn.classList.remove("keyPressed");
       calculate();
     } else if (buttonValue === "RESET") {
+      plusBtn.classList.remove("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
       clearCalculator();
+    } else if(buttonValue === "DEL"){
+      plusBtn.classList.remove("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
+      deleteValue();
     } else {
       inputDigit(buttonValue);
     }
@@ -105,4 +115,11 @@ function clearCalculator(){
   calculator.firstOperand = null;
   calculator.operator = null;
   calculator.waitingForSecondOperand = false;
+}
+function deleteValue(){
+  if (calculator.displayValue.length > 1) {
+    calculator.displayValue = calculator.displayValue.slice(0, -1);
+  } else {
+    calculator.displayValue = '0';
+  }
 }
