@@ -15,7 +15,7 @@ You can try the calculator app online by visiting the [Demo Page](https://swatit
 
 Here's a screenshot of the calculator app:
 
-![Calculator App](Screenshot 2023-09-22 125236.png)
+<img src="Screenshot 2023-09-22 125236.png">
 
 ## Description
 
