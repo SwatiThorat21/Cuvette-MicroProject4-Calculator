@@ -22,18 +22,31 @@ let btnArray = Array.from(buttons);
 btnArray.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let buttonValue = e.target.textContent;
+
     if (buttonValue === "+") {
       handleOperator(buttonValue);
       plusBtn.classList.add("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
     } else if (buttonValue === "-") {
       handleOperator(buttonValue);
       minusBtn.classList.add("keyPressed");
+      plusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
     } else if (buttonValue === "÷") {
       handleOperator(buttonValue);
       divideBtn.classList.add("keyPressed");
+      plusBtn.classList.remove("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      multiplyBtn.classList.remove("keyPressed");
     } else if (buttonValue === "x") {
       handleOperator(buttonValue);
       multiplyBtn.classList.add("keyPressed");
+      plusBtn.classList.remove("keyPressed");
+      minusBtn.classList.remove("keyPressed");
+      divideBtn.classList.remove("keyPressed");
     } else if (buttonValue === "=") {
       plusBtn.classList.remove("keyPressed");
       minusBtn.classList.remove("keyPressed");
@@ -46,7 +59,7 @@ btnArray.forEach((btn) => {
       divideBtn.classList.remove("keyPressed");
       multiplyBtn.classList.remove("keyPressed");
       clearCalculator();
-    } else if(buttonValue === "DEL"){
+    } else if (buttonValue === "DEL") {
       plusBtn.classList.remove("keyPressed");
       minusBtn.classList.remove("keyPressed");
       divideBtn.classList.remove("keyPressed");
@@ -60,7 +73,9 @@ btnArray.forEach((btn) => {
 });
 
 function inputDigit(digit) {
-  if (String(calculator.displayValue).includes(".")) return;
+  if (String(calculator.displayValue).includes(".")) {
+    if (digit === ".") return;
+  }
   if (calculator.waitingForSecondOperand) {
     calculator.displayValue = digit;
     calculator.waitingForSecondOperand = false;
@@ -73,7 +88,6 @@ function inputDigit(digit) {
 function handleOperator(nextOperator) {
   let inputValue = parseFloat(calculator.displayValue);
   calculator.operator = nextOperator;
-
   if (calculator.firstOperand === null) {
     calculator.firstOperand = inputValue;
   } else if (calculator.operator) {
@@ -110,16 +124,16 @@ function calculate() {
   }
 }
 
-function clearCalculator(){
-  calculator.displayValue = '0';
+function clearCalculator() {
+  calculator.displayValue = "0";
   calculator.firstOperand = null;
   calculator.operator = null;
   calculator.waitingForSecondOperand = false;
 }
-function deleteValue(){
+function deleteValue() {
   if (calculator.displayValue.length > 1) {
     calculator.displayValue = calculator.displayValue.slice(0, -1);
   } else {
-    calculator.displayValue = '0';
+    calculator.displayValue = "0";
   }
 }
